@@ -39,6 +39,7 @@ const RegisterModal = () => {
     const bodyContent = (
         <div className="flex flex-col gap-4">
             <Heading title="Welcome to PetStay" subtitle="Create an account" center/>
+            <label>Email</label>
             <Input 
                 id="email"
                 label="Email"
@@ -46,6 +47,29 @@ const RegisterModal = () => {
                 register={register}
                 errors={errors}
                 required
+                type = "email"
+                placeholder="Enter email here" 
+            />
+            <label>Full Name</label>
+            <Input 
+                id="name"
+                label="name"
+                disabled={isLoading}
+                register={register}
+                errors={errors}
+                required
+                placeholder="Enter your full name here" 
+            />
+            <label>Password</label>
+            <Input 
+                id="password"
+                label="password"
+                disabled={isLoading}
+                register={register}
+                errors={errors}
+                required
+                type="password"
+                placeholder="Enter password here" 
             />
         </div>
     )
