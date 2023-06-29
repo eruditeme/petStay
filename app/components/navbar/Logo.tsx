@@ -8,7 +8,7 @@ const Logo = () => {
 
     return (
         <div className="md:block cursor-pointer">
-            <Image alt="Logo" height="50" width="50" src="/images/hamster.png"></Image>
+            <Image onClick={() => router.push("/")} alt="Logo" height="50" width="50" src="/images/hamster.png"></Image>
             <div>PetStay</div>
         </div>
     )
