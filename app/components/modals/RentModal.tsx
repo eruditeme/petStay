@@ -1,12 +1,13 @@
 "use client"
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import Modal from "./Modal"
 import useRentModal from "@/app/hooks/useRentModal"
 import Heading from "../Heading";
 import { categories } from "../navbar/Categories";
 import CategoryInput from "../inputs/CategoryInput";
 import { FieldValues, useForm } from "react-hook-form";
-import Head from "next/head";
+import CountrySelect from "../inputs/CountrySelect";
+import Map from "../Map";
 
 enum STEPS {
     CATEGORY = 0,
@@ -31,6 +32,7 @@ const RentModal = () => {
         }
     })
     const category = watch("category");
+    const location = watch("location");
 
     const setCustomValue = (id: string, value:any) => {
         setValue(id, value, {
@@ -42,10 +44,12 @@ const RentModal = () => {
 
     const onBack = () => {
         setStep((value) => value - 1);
+        console.log(step);
     }
 
     const onNext = () => {
         setStep((value) => value + 1);
+        console.log(step);
     }
 
     const actionLabel = useMemo(() => {
@@ -82,24 +86,31 @@ const RentModal = () => {
             </div>
         </div>
     )
-
+    
     if (step === STEPS.LOCATION) {
         bodyContent = (
             <div className="flex flex-col gap-8">
                 <Heading 
-                    title="What city are you located in?"
+                    title="What are you located?"
                     subtitle="Let pet owners know how close you are to them"
                 />
+                <CountrySelect 
+                    onChange={(value) => setCustomValue("location", value)}
+                    value = {location}
+                />
+                <Map />
             </div>
         )
     }
+
+
     return (
         <Modal 
             isOpen={rentModal.isOpen}
             body={bodyContent}
             title="Become a pet sitter today"
             onClose={rentModal.onClose}
-            onSubmit={rentModal.onClose}
+            onSubmit={onNext}
             actionLabel={actionLabel}
             secondaryLabel={secondaryActionLabel}
             secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
