@@ -11,9 +11,11 @@ import Heading from '../Heading';
 import Input from "../inputs/Input";
 import { toast} from 'react-hot-toast';
 import Button from "../Button";
+import useLoginModal from "@/app/hooks/useLoginModal";
 
 const RegisterModal = () => {
     const registerModal = useRegisterModal();
+    const loginModal = useLoginModal();
     const [isLoading, setLoading] = useState(false);
     const {register, handleSubmit, formState: {errors}} = useForm<FieldValues>({
         defaultValues: {
@@ -37,9 +39,14 @@ const RegisterModal = () => {
         })
     }
 
+    const toggle = useCallback(() => {
+        registerModal.onClose();
+        loginModal.onOpen();
+    }, [loginModal, registerModal])
+
     const bodyContent = (
         <div className="flex flex-col gap-4">
-            <Heading title="Welcome to PetStay" subtitle="Create an account" center/>
+            <Heading title="Welcome to Paws Pet Sitting" subtitle="Create an account" center/>
             <label>Email</label>
             <Input 
                 id="email"
@@ -83,7 +90,7 @@ const RegisterModal = () => {
                     <div>
                         Already have an account?
                     </div>
-                    <div onClick={registerModal.onClose} className="text-neutral-800 cursor-pointer hover:underline">
+                    <div onClick={toggle} className="text-neutral-800 cursor-pointer hover:underline">
                         Login
                     </div>
                 </div>

@@ -11,9 +11,6 @@ const Search = () => {
                 <div className="sm-block text-sm font-semibold px-6 border-x-[1px] flex-1 text-center">
                     Any Week
                 </div>
-                <div className="text-sm font-semibold px-6 text-center flex-row">
-                    Add Furry Friends
-                </div>
                 <div className='p-2 rounded-full'>
                     <BiSearch size={18}></BiSearch>
                 </div>

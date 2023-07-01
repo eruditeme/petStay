@@ -45,9 +45,14 @@ const LoginModal = () => {
         })
     }
 
+    const toggle = useCallback(() => {
+        loginModal.onClose();
+        registerModal.onOpen();
+    }, [loginModal, registerModal])
+
     const bodyContent = (
         <div className="flex flex-col gap-4">
-            <Heading title="Welcome to PetStay" subtitle="Sign In" center/>
+            <Heading title="Welcome back to Paws Pet Sitting" subtitle="Sign In" center/>
             <label>Email</label>
             <Input 
                 id="email"
@@ -81,8 +86,8 @@ const LoginModal = () => {
                     <div>
                         Don&apos;t have an account?
                     </div>
-                    <div onClick={loginModal.onClose} className="text-neutral-800 cursor-pointer hover:underline">
-                        Sign up here
+                    <div onClick={toggle} className="text-neutral-800 cursor-pointer hover:underline">
+                        Create an account
                     </div>
                 </div>
 
