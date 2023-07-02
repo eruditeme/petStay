@@ -15,7 +15,7 @@ model User {
   name String?
   email String? @unique
   emailVerified DateTime?
-  image String?
+  image String @default("")
   hashedPassword String?
   createdAt DateTime @default(now())
   updateAt DateTime @updatedAt
@@ -29,8 +29,8 @@ model User {
 model Listing {
   id String@id @default(auto()) @map("_id") @db.ObjectId
   title String
+  image String @default("")
   description String
-  imageSrc String
   createdAt DateTime @default(now())
   category String
   locationValue String
