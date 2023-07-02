@@ -5,22 +5,26 @@ import useRentModal from "@/app/hooks/useRentModal"
 import Heading from "../Heading";
 import { categories } from "../navbar/Categories";
 import CategoryInput from "../inputs/CategoryInput";
-import { FieldValues, useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import CountrySelect from "../inputs/CountrySelect";
-import Map from "../Map";
+import dynamic from "next/dynamic";
+import Input from '../inputs/Input';
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 enum STEPS {
     CATEGORY = 0,
     LOCATION = 1,
-    INFO = 2,
-    IMAGES = 3,
-    DESCRIPTION = 4,
-    PRICE = 5
+    DESCRIPTION = 2,
+    PRICE = 3
 }
 
 const RentModal = () => {
+    const router = useRouter();
     const rentModal = useRentModal();
     const [step, setStep] = useState(STEPS.CATEGORY);
+    const [isLoading, setIsLoading] = useState(false);
     const {register, handleSubmit, setValue, watch, formState:{errors},reset} = useForm<FieldValues>({
         defaultValues: {
             category: "",
@@ -34,6 +38,10 @@ const RentModal = () => {
     const category = watch("category");
     const location = watch("location");
 
+    const Map = useMemo(() => dynamic(() => import("../Map"), {
+        ssr: false
+    }), [location]);
+
     const setCustomValue = (id: string, value:any) => {
         setValue(id, value, {
             shouldValidate: true,
@@ -44,12 +52,32 @@ const RentModal = () => {
 
     const onBack = () => {
         setStep((value) => value - 1);
-        console.log(step);
     }
 
     const onNext = () => {
         setStep((value) => value + 1);
-        console.log(step);
+    }
+
+    const onSubmit: SubmitHandler<FieldValues> = (data) => {
+        if (step !== STEPS.PRICE) {
+            return onNext();
+        }
+
+        setIsLoading(true);
+        axios.post("/api/listings", data)
+        .then(() => {
+            toast.success("Listing Created");
+            router.refresh();
+            reset();
+            setStep(STEPS.CATEGORY);
+            rentModal.onClose();
+        })
+        .catch(() => {
+            toast.error("Something went wrong")
+        })
+        .finally(() => {
+            setIsLoading(false);
+        })
     }
 
     const actionLabel = useMemo(() => {
@@ -98,11 +126,62 @@ const RentModal = () => {
                     onChange={(value) => setCustomValue("location", value)}
                     value = {location}
                 />
-                <Map />
+                <Map center={location?.latlng}/>
             </div>
         )
     }
 
+    if (step === STEPS.DESCRIPTION) {
+        bodyContent = (
+            <div className="flex flex-col gap-8">
+                <Heading 
+                title="Describe yourself"
+                subtitle="Try to keep it short and sweet!"
+                />
+                <div>Title</div>
+                <Input 
+                    id="title"
+                    label="Title"
+                    disabled={isLoading}
+                    register={register}
+                    errors={errors}
+                    required
+                    placeholder="Enter Title Here"
+                />
+                <div>Description</div>
+                <Input 
+                    id="description"
+                    label="Description"
+                    disabled={isLoading}
+                    register={register}
+                    errors={errors}
+                    placeholder="Enter Description Here"
+                    required
+                />
+            </div>
+        )
+    }
+
+    if (step === STEPS.PRICE) {
+        bodyContent = (
+            <div className="flex flex-col gap-8">
+                <Heading 
+                title="Price"
+                subtitle="How much do you charge for pet sitting each night?"
+                />
+                <Input 
+                    id ="price"
+                    label="price"
+                    formatPrice
+                    type="number"
+                    disabled={isLoading}
+                    register={register}
+                    errors={errors}
+                    required
+                />
+            </div>
+        )
+    }
 
     return (
         <Modal 
@@ -110,7 +189,7 @@ const RentModal = () => {
             body={bodyContent}
             title="Become a pet sitter today"
             onClose={rentModal.onClose}
-            onSubmit={onNext}
+            onSubmit={handleSubmit(onSubmit)}
             actionLabel={actionLabel}
             secondaryLabel={secondaryActionLabel}
             secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
