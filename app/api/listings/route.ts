@@ -32,6 +32,7 @@ export async function POST(
             description,
             category,
             image: currentUser.image !== null ? currentUser.image : undefined,
+            listingOwner: currentUser.name || undefined,
             locationValue: location.value,
             price: parseInt(price, 10),
             userId: currentUser.id

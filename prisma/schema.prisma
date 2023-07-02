@@ -35,6 +35,7 @@ model Listing {
   category String
   locationValue String
   userId String @db.ObjectId
+  listingOwner String @default("")
   price Int
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)

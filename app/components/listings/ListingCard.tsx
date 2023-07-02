@@ -71,13 +71,17 @@ const ListingCard: React.FC<ListingCardProps> = ({
                         />
                     </div>
                     <hr></hr>
-                    <div className="p-4 xs: text-lg sm:text-md md:text-md lg:text-sm">
-                        {data.title}
-                        <div className="text-slate-500">
-                            {}
+                    <div className="p-4">
+                        <div className="xs:text-xl sm:text-xl md:text-lg lg:text-md">
+                            {data.title}
                         </div>
-                        <div className="text-slate-500 my-4">
-                            {data.description}
+                        <div className="xs:text-lg sm:text-md md:text-md lg:text-sm">
+                            <div className="text-slate-500">
+                                {data.listingOwner}
+                            </div>
+                            <div className="text-slate-500 my-4">
+                                {data.description}
+                            </div>
                         </div>
                     </div>
                 </div>
