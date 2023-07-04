@@ -41,6 +41,9 @@ const ListingCard: React.FC<ListingCardProps> = ({
         }, [onAction, actionId, disabled]
     )
 
+    //Animals they selected they are comfortable with pet sitting
+    const compatibleAnimals = data.category.map(item => item.toLowerCase()).join(", ");
+
     const price = useMemo(() => {
         if (reservation) {
             return reservation.totalPrice;
@@ -81,6 +84,9 @@ const ListingCard: React.FC<ListingCardProps> = ({
                             </div>
                             <div className="text-slate-500 my-4">
                                 {data.description}
+                            </div>
+                            <div className="text-slate-500 my-4">
+                                Works with {compatibleAnimals}
                             </div>
                         </div>
                     </div>
