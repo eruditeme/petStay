@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useMemo, useState, useEffect } from "react";
 import Modal from "./Modal"
 import useRentModal from "@/app/hooks/useRentModal"
