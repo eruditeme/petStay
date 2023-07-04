@@ -3,9 +3,10 @@
 import useCountries from "@/app/hooks/useCountries";
 import { Listing, Reservation, User } from "@prisma/client";
 import { useRouter } from "next/navigation";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {format} from "date-fns";
 import Image from "next/image";
+import HeartButton from "../HeartButton";
 
 interface ListingCardProps {
     data: Listing;
@@ -60,8 +61,9 @@ const ListingCard: React.FC<ListingCardProps> = ({
 
         return `${format(start, "PP")} - ${format(end, "PP")}`
     }, [reservation])
+
     return (
-        <div onClick={() => router.push(`/listings/${data.id}`)} className="col-span-1 cursor-pointer group">
+        <div className="col-span-1 group">
             <div className="flex flex-col gap-2 w-full">
                 <div className="w-full relative overflow-hidden border-2 rounded-xl">
                     <div className=" flex justify-center items-center py-4" style={{ backgroundImage: "url('/images/card_background.png')", backgroundSize: 'cover' }}>
@@ -74,7 +76,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                         />
                     </div>
                     <hr></hr>
-                    <div className="p-4">
+                    <div className="p-4 cursor-pointer" onClick={() => router.push(`/listings/${data.id}`)} >
                         <div className="xs:text-xl sm:text-xl md:text-lg lg:text-md">
                             {data.title}
                         </div>
@@ -83,12 +85,22 @@ const ListingCard: React.FC<ListingCardProps> = ({
                                 {data.listingOwner}
                             </div>
                             <div className="text-slate-500 my-4">
-                                {data.description}
-                            </div>
-                            <div className="text-slate-500 my-4">
                                 Works with {compatibleAnimals}
                             </div>
+                            <div className="text-slate-500">
+                                $ {data.price} per night
+                            </div>
                         </div>
+                    </div>
+                    <hr></hr>
+                    <div className="xs:text-lg sm:text-md md:text-md lg:text-sm px-4 py-2">
+                        {location?.region}, {location?.label}
+                    </div>
+                    <div className="absolute top-3 right-3">
+                        <HeartButton 
+                            listingId={data.id}
+                            currentUser={currentUser}
+                        />
                     </div>
                 </div>
             </div>
