@@ -12,6 +12,7 @@ import useLoginModal from "@/app/hooks/useLoginModal";
 import Image from "next/image";
 import { Reservation, Listing, User } from "@prisma/client";
 import ListingReservation from "@/app/components/listings/ListingReservation";
+import { SafeReservation } from "@/app/types";
 
 const initialDateRange = {
     startDate: new Date(),
@@ -20,7 +21,7 @@ const initialDateRange = {
 };
 
 interface ListingClientProps {
-    reservations?: Reservation[];
+    reservations?: SafeReservation[];
     listing: Listing & {
         user: User;
     };
@@ -133,7 +134,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
             <hr></hr>
             <div className="lg:px-20 md:px-10 px-5 pt-4 text-lg flex flex-row gap-4 text-neutral-500">
                 <div className="flex-col">
-                    <div className="text-black font-medium">
+                    <div className="text-black font-medium pt-5">
                         Description
                     </div>
                     <div className="mb-3">
