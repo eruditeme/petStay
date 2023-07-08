@@ -14,7 +14,7 @@ const font = Nunito({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'PetStay',
-  description: 'Airbnb clone',
+  description: 'Pet sitting website',
 }
 
 export default async function RootLayout({

@@ -132,9 +132,9 @@ const ListingClient: React.FC<ListingClientProps> = ({
                 </div>
             </div>
             <hr></hr>
-            <div className="lg:px-20 md:px-10 px-5 pt-4 text-lg flex flex-row gap-4 text-neutral-500">
+            <div className="lg:px-20 md:px-10 px-5 pt-4 text-lg flex flex-row gap-8 text-neutral-500">
                 <div className="flex-col">
-                    <div className="text-black font-medium pt-5">
+                    <div className="text-black font-medium pt-12">
                         Description
                     </div>
                     <div className="mb-3">
