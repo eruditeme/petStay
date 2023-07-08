@@ -49,6 +49,7 @@ model Reservation {
   startdate DateTime
   endDate DateTime
   totalPrice Int
+  locationValue String @default("")
   createdAt DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
