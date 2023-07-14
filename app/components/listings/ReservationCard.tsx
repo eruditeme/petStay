@@ -30,7 +30,6 @@ const ReservationCard: React.FC<ReservationCardProps> = ({
 }) => {
     const router = useRouter();
     const {getByValue} = useCountries();
-    const location = getByValue(reservation.locationValue);
 
     const price = useMemo(() => {
         if (reservation) {
@@ -76,7 +75,7 @@ const ReservationCard: React.FC<ReservationCardProps> = ({
                     </div>
                     <hr></hr>
                     <div className="xs:text-lg sm:text-md md:text-md lg:text-sm px-4 py-2">
-                        Client Address: {location?.region}, {location?.label}
+                        Client Address: {reservation.locationValue}
                     </div>
                 </div>
             </div>
