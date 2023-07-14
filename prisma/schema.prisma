@@ -45,6 +45,7 @@ model Listing {
 model Reservation {
   id String@id @default(auto()) @map("_id") @db.ObjectId
   userId String @db.ObjectId
+  userName String 
   listingId String @db.ObjectId
   startdate DateTime
   endDate DateTime

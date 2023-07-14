@@ -35,6 +35,7 @@ export async function POST(
             startdate,
             endDate,
             totalPrice,
+            userName: currentUser.name || "",
             locationValue: currentUser.locationValue || ""
           }
         }
