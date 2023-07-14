@@ -68,8 +68,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
             totalPrice,
             startdate: dateRange.startDate,
             endDate: dateRange.endDate,
-            listingId: listing?.id,
-            locationValue: currentUser.locationValue
+            listingId: listing?.id
         })
         .then(() => {
             toast.success('Listing reserved!');
@@ -118,7 +117,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
                         className="rounded-full"
                     />
                 </div>
-                <div className="col-span-8 text-3xl font-extrabold pt-10">
+                <div className="col-span-8 lg:text-3xl md:text-2xl text-xl font-extrabold pt-10">
                     <div>
                         {listing.title}
                     </div>
@@ -131,22 +130,14 @@ const ListingClient: React.FC<ListingClientProps> = ({
                 </div>
             </div>
             <hr></hr>
-            <div className="lg:px-20 md:px-10 px-5 pt-4 text-lg flex flex-row gap-8 text-neutral-500">
-                <div className="flex-col">
-                    <div className="text-black font-medium pt-12">
-                        Description
-                    </div>
-                    <div className="mb-3">
-                        {listing.description}
-                    </div>
-                    <div className="text-black font-medium">
-                        Information
-                    </div>
-                    <div>
-                        {listing.listingOwner} pet sits {compatibleAnimals}
-                    </div>
+            <div className="lg:px-20 gap-8 md:px-10 px-5 pt-4 flex flex-col lg:flex-row text-lg text-neutral-500">
+                <div className="lg:w-8/12">
+                    <div className="text-black font-medium pt-12">Description</div>
+                    <div className="mb-3">{listing.description}</div>
+                    <div className="text-black font-medium">Information</div>
+                    <div>{listing.listingOwner} pet sits {compatibleAnimals}</div>
                 </div>
-                <div className="flex-col">
+                <div className="lg:w-4/12">
                     <ListingReservation
                         price={listing.price}
                         totalPrice={totalPrice}

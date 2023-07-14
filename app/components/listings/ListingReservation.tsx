@@ -46,12 +46,14 @@ const ListingReservation: React.FC<
         </div>
       </div>
       <hr />
-      <Calendar
-        value={dateRange}
-        disabledDates={disabledDates}
-        onChange={(value) => 
-          onChangeDate(value.selection)}
-      />
+      <div className="flex items-center justify-center">
+        <Calendar
+          value={dateRange}
+          disabledDates={disabledDates}
+          onChange={(value) => 
+            onChangeDate(value.selection)}
+        />
+      </div>
       <hr />
       <div className="p-4">
         <Button 

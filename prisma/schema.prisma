@@ -20,7 +20,10 @@ model User {
   createdAt DateTime @default(now())
   updateAt DateTime @updatedAt
   favoriteIds String[] @db.ObjectId
-  locationValue String?
+  address String @default("")
+  code String @default("")
+  country String @default("")
+  province String @default("")
 
   listings Listing[]
   reservations Reservation[]
@@ -50,7 +53,10 @@ model Reservation {
   startdate DateTime
   endDate DateTime
   totalPrice Int
-  locationValue String @default("")
+  address String @default("")
+  code String @default("")
+  country String @default("")
+  province String @default("")
   createdAt DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)

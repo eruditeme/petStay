@@ -19,7 +19,7 @@ const ProfileClient: React.FC<ProfileClientProps> = ({
                 title="Profile"
                 subtitle="Update your profile here"
             />
-            <div>
+            <div className="">
                 
             </div>
         </Container>

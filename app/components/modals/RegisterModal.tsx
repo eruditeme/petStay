@@ -11,22 +11,36 @@ import Heading from '../Heading';
 import Input from "../inputs/Input";
 import { toast} from 'react-hot-toast';
 import Button from "../Button";
+import { useMemo } from "react";
 import useLoginModal from "@/app/hooks/useLoginModal";
+
+enum STEPS {
+    BASIC = 0,
+    LOCATION = 1,
+
+}
 
 const RegisterModal = () => {
     const registerModal = useRegisterModal();
     const loginModal = useLoginModal();
+    const [step, setStep] = useState(STEPS.BASIC);
     const [isLoading, setLoading] = useState(false);
     const {register, handleSubmit, formState: {errors}} = useForm<FieldValues>({
         defaultValues: {
             name: "",
             email: "",
             password: "",
-            locationValue: ""
+            address: "",
+            code: "",
+            country: "",
+            province: ""
         }
     })
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
+        if (step !== STEPS.LOCATION) {
+            return onNext();
+        }
         setLoading(true);
         axios.post('/api/register', data)
         .then(() => {
@@ -45,7 +59,29 @@ const RegisterModal = () => {
         loginModal.onOpen();
     }, [loginModal, registerModal])
 
-    const bodyContent = (
+    const actionLabel = useMemo(() => {
+        if (step === STEPS.LOCATION) {
+            return "Create";
+        }
+        return "Next";
+    }, [step])
+
+    const onBack = () => {
+        setStep((value) => value - 1);
+    }
+
+    const onNext = () => {
+        setStep((value) => value + 1);
+    }
+
+    const secondaryActionLabel = useMemo(() => {
+        if (step === STEPS.BASIC) {
+            return undefined;
+        }
+        return "Back";
+    }, [step])
+
+    let bodyContent = (
         <div className="flex flex-col gap-4">
             <Heading title="Welcome to Paws Pet Sitting" subtitle="Create an account" center/>
             <label>Email</label>
@@ -80,18 +116,56 @@ const RegisterModal = () => {
                 type="password"
                 placeholder="Enter password here" 
             />
-            <label>Home Address</label>
-            <Input 
-                id="locationValue"
-                label="locationValue"
-                disabled={isLoading}
-                register={register}
-                errors={errors}
-                required
-                placeholder="Enter your home address here" 
-            />
         </div>
     )
+
+    if (step === STEPS.LOCATION) {
+        bodyContent = (
+            <div className="flex flex-col gap-4">
+                <Heading title="Welcome to Paws Pet Sitting" subtitle="Create an account" center/>
+                <label>Home Address</label>
+                <Input 
+                    id="address"
+                    label="address"
+                    disabled={isLoading}
+                    register={register}
+                    errors={errors}
+                    required
+                    placeholder="Enter home address here" 
+                />
+                <label>Province</label>
+                <Input 
+                    id="province"
+                    label="province"
+                    disabled={isLoading}
+                    register={register}
+                    errors={errors}
+                    required
+                    placeholder="Province" 
+                />
+                <label>Country</label>
+                <Input 
+                    id="country"
+                    label="country"
+                    disabled={isLoading}
+                    register={register}
+                    errors={errors}
+                    required
+                    placeholder="Country" 
+                />
+                <label>Postal Code</label>
+                <Input 
+                    id="code"
+                    label="code"
+                    disabled={isLoading}
+                    register={register}
+                    errors={errors}
+                    required
+                    placeholder="Postal Code" 
+                />
+            </div>
+        )
+    }
 
     const footerContent = (
         <div className="flex flex-col gap-4 mt-3">
@@ -114,11 +188,13 @@ const RegisterModal = () => {
             disabled={isLoading} 
             isOpen={registerModal.isOpen} 
             title="Register" 
-            actionLabel="Continue" 
+            actionLabel={actionLabel} 
             onClose={registerModal.onClose} 
             onSubmit={handleSubmit(onSubmit)}
             body = {bodyContent}
             footer={footerContent}
+            secondaryLabel={secondaryActionLabel}
+            secondaryAction={step === STEPS.BASIC ? undefined : onBack}
         />
     )
 }

@@ -36,7 +36,10 @@ export async function POST(
             endDate,
             totalPrice,
             userName: currentUser.name || "",
-            locationValue: currentUser.locationValue || ""
+            address: currentUser.address,
+            code: currentUser.code,
+            country: currentUser.country,
+            province: currentUser.province
           }
         }
       }

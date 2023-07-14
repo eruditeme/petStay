@@ -75,7 +75,7 @@ const ReservationCard: React.FC<ReservationCardProps> = ({
                     </div>
                     <hr></hr>
                     <div className="xs:text-lg sm:text-md md:text-md lg:text-sm px-4 py-2">
-                        Client Address: {reservation.locationValue}
+                        Client Address: {reservation.address}, {reservation.province}, {reservation.country} {reservation.code}
                     </div>
                 </div>
             </div>

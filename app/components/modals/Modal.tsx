@@ -102,6 +102,7 @@ const Modal: React.FC<ModalProps> = ({
             translate
             duration-300
             h-full
+            bg-white 
             ${showModal ? 'translate-y-0' : 'translate-y-full'}
             ${showModal ? 'opacity-100' : 'opacity-0'}
           `}>
@@ -155,7 +156,7 @@ const Modal: React.FC<ModalProps> = ({
                 {body}
               </div>
               {/*footer*/}
-              <div className="flex flex-col gap-2 p-6">
+              <div className="flex flex-col gap-2 p-6 bg-white">
                 <div 
                   className="
                     flex 
