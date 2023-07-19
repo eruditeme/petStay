@@ -57,6 +57,8 @@ const ListingClient: React.FC<ListingClientProps> = ({
     const compatibleAnimals = listing.category.map(item => item.toLowerCase()).join(", ");
     const {getByValue} = useCountries();
     const loc = getByValue(listing.locationValue);
+    const [startTime, setStartTime] = useState("8:00 pm");
+    const [endTime, setEndTime] = useState("8:00 am");
 
     const onCreateReservation = useCallback(() => {
         if (!currentUser) {
@@ -68,7 +70,9 @@ const ListingClient: React.FC<ListingClientProps> = ({
             totalPrice,
             startdate: dateRange.startDate,
             endDate: dateRange.endDate,
-            listingId: listing?.id
+            listingId: listing?.id,
+            startTime,
+            endTime
         })
         .then(() => {
             toast.success('Listing reserved!');
@@ -107,8 +111,8 @@ const ListingClient: React.FC<ListingClientProps> = ({
 
     return ( 
         <div>
-            <div className="lg:px-20 md:px-10 px-5 grid grid-rows-1 grid-flow-col gap-4 py-4" style={{ backgroundImage: "url('/images/bkgnd.jpeg')", backgroundSize: 'cover' }}>
-                <div className="row-span-3">
+            <div className="flex lg:ps-20 md:ps-10 ps-5 py-5" style={{ backgroundImage: "url('/images/bkgnd.jpeg')", backgroundSize: 'cover' }}>
+                <div className="me-6">
                     <Image 
                         height={200}
                         width={200}
@@ -117,7 +121,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
                         className="rounded-full"
                     />
                 </div>
-                <div className="col-span-8 lg:text-3xl md:text-2xl text-xl font-extrabold pt-10">
+                <div className="lg:text-3xl md:text-2xl text-xl font-extrabold lg:pt-10 md:pt-8 pt-4">
                     <div>
                         {listing.title}
                     </div>
@@ -130,22 +134,26 @@ const ListingClient: React.FC<ListingClientProps> = ({
                 </div>
             </div>
             <hr></hr>
-            <div className="lg:px-20 gap-8 md:px-10 px-5 pt-4 flex flex-col lg:flex-row text-lg text-neutral-500">
-                <div className="lg:w-8/12">
+            <div className="lg:px-20 md:px-10 px-7 pt-4 flex flex-wrap text-lg text-neutral-500">
+                <div className="mb-8">
                     <div className="text-black font-medium pt-12">Description</div>
                     <div className="mb-3">{listing.description}</div>
                     <div className="text-black font-medium">Information</div>
                     <div>{listing.listingOwner} pet sits {compatibleAnimals}</div>
                 </div>
-                <div className="lg:w-4/12">
+                <div className="md:ms-auto">
                     <ListingReservation
                         price={listing.price}
                         totalPrice={totalPrice}
                         onChangeDate={(value) => setDateRange(value)}
+                        onStartTime={(value) => setStartTime(value)}
+                        onEndTime={(value) => setEndTime(value)}
                         dateRange={dateRange}
                         onSubmit={onCreateReservation}
                         disabled={isLoading}
                         disabledDates={disabledDates}
+                        startTime={startTime}
+                        endTime={endTime}
                     />
                 </div>
             </div>

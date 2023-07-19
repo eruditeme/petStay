@@ -10,9 +10,13 @@ interface ListingReservationProps {
   dateRange: Range,
   totalPrice: number;
   onChangeDate: (value: Range) => void;
+  onStartTime: (value: string) => void;
+  onEndTime: (value: string) => void;
   onSubmit: () => void;
   disabled?: boolean;
   disabledDates: Date[];
+  startTime: string;
+  endTime: string;
 }
 
 const ListingReservation: React.FC<
@@ -22,9 +26,13 @@ const ListingReservation: React.FC<
   dateRange,
   totalPrice,
   onChangeDate,
+  onStartTime,
+  onEndTime,
   onSubmit,
   disabled,
-  disabledDates
+  disabledDates,
+  startTime,
+  endTime
 }) => {
   return ( 
     <div 
@@ -55,6 +63,34 @@ const ListingReservation: React.FC<
         />
       </div>
       <hr />
+      <div className="text-center mt-2">
+        <div className="font-light text-neutral-600">
+          Start Time
+        </div>
+        <div>
+          <input
+            required
+            type="text"
+            value={startTime}
+            onChange={(event) => onStartTime(event.target.value)}
+            placeholder={startTime}
+            className="text-center border-neutral-300 border border-solid border-1 rounded-md"
+          />
+        </div>
+        <div className="font-light text-neutral-600">
+          End Time
+        </div>
+        <div>
+          <input
+            required
+            type="text"
+            value={endTime}
+            onChange={(event) => onEndTime(event.target.value)}
+            placeholder={endTime}
+            className="text-center border-neutral-300 border border-solid border-1 rounded-md"
+          />
+        </div>
+      </div>
       <div className="p-4">
         <Button 
           disabled={disabled} 

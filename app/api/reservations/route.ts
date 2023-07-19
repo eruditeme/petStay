@@ -17,7 +17,9 @@ export async function POST(
     listingId,
     startdate,
     endDate,
-    totalPrice
+    totalPrice,
+    startTime,
+    endTime
    } = body;
 
    if (!listingId || !startdate || !endDate || !totalPrice) {
@@ -39,7 +41,9 @@ export async function POST(
             address: currentUser.address,
             code: currentUser.code,
             country: currentUser.country,
-            province: currentUser.province
+            province: currentUser.province,
+            startTime,
+            endTime
           }
         }
       }

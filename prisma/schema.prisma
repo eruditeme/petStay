@@ -58,6 +58,8 @@ model Reservation {
   country String @default("")
   province String @default("")
   createdAt DateTime @default(now())
+  startTime String @default("")
+  endTime String @default("")
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)

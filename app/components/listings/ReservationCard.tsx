@@ -69,6 +69,12 @@ const ReservationCard: React.FC<ReservationCardProps> = ({
                                 Date: {reservationDate}
                             </div>
                             <div className="text-slate-500">
+                                Start Time: {reservation.startTime}
+                            </div>
+                            <div className="text-slate-500">
+                                End Time: {reservation.endTime}
+                            </div>
+                            <div className="text-slate-500">
                                 Earnings: $ {price}
                             </div>
                         </div>
