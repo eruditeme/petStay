@@ -6,17 +6,21 @@ import { useState, useCallback } from 'react';
 import MenuItem from '../navbar/MenuItem';
 import useRegisterModal from '@/app/hooks/useRegisterModal';
 import useLoginModal from '@/app/hooks/useLoginModal';
-import { User } from '@prisma/client';
+import { Listing, User } from '@prisma/client';
 import { signOut } from 'next-auth/react';
 import useRentModal from '@/app/hooks/useRentModal';
 import { useRouter } from 'next/navigation';
+import { SafeUser } from '@/app/types';
+import { toast } from 'react-hot-toast';
 
 interface UserMenuProps {
-    currentUser?: User | null;
+    currentUser?: SafeUser | null;
+    listing?: any | null;
 }
 
 const UserMenu:React.FC<UserMenuProps> = ({
-    currentUser
+    currentUser,
+    listing
 }) => {
     const router = useRouter();
     const registerModal = useRegisterModal();
@@ -31,6 +35,9 @@ const UserMenu:React.FC<UserMenuProps> = ({
     const onBook = useCallback(() => {
         if (!currentUser) {
             loginModal.onOpen();
+        }
+        else if (listing) {
+            toast.error("You are already a pet sitter")
         }
         else {
             //Open Booking Modal
@@ -57,7 +64,6 @@ const UserMenu:React.FC<UserMenuProps> = ({
                     <div className='flex flex-col cursor-pointer'>
                         {currentUser ? (
                             <>
-                                <MenuItem onClick={()=> router.push("/profile")} label="Profile"/>
                                 <MenuItem onClick={()=> router.push("/reservations")} label="Reservations"/>
                                 <MenuItem onClick={()=> router.push("/favorites")} label="My Favorite Pet Sitters"/>
                                 <hr />

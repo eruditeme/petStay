@@ -9,6 +9,7 @@ import LoginModal from './components/modals/LoginModal'
 import getCurrentUser from './actions/getCurrentUser'
 import RentModal from './components/modals/RentModal'
 import ProfileModal from './components/modals/ProfileModal'
+import getUserListings from './actions/getListingByUser'
 
 const font = Nunito({ subsets: ['latin'] })
 
@@ -23,6 +24,7 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
   const currentUser = await getCurrentUser();
+  const userListing = await getUserListings();
   return (
     <html lang="en">
       <body className={font.className}>
@@ -32,7 +34,7 @@ export default async function RootLayout({
           <RentModal />
           <RegisterModal />
           <LoginModal />
-          <Navbar currentUser={currentUser}/>
+          <Navbar currentUser={currentUser} listing={userListing}/>
         </ClientOnly>
         <div className='pb-20 pt-28'>
           {children}

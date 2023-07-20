@@ -12,7 +12,7 @@ import useLoginModal from "@/app/hooks/useLoginModal";
 import Image from "next/image";
 import { Reservation, Listing, User } from "@prisma/client";
 import ListingReservation from "@/app/components/listings/ListingReservation";
-import { SafeReservation } from "@/app/types";
+import { SafeReservation, SafeUser } from "@/app/types";
 
 const initialDateRange = {
     startDate: new Date(),
@@ -23,9 +23,9 @@ const initialDateRange = {
 interface ListingClientProps {
     reservations?: SafeReservation[];
     listing: Listing & {
-        user: User;
+        user: SafeUser;
     };
-    currentUser?: User | null;
+    currentUser?: SafeUser | null;
 }
 
 const ListingClient: React.FC<ListingClientProps> = ({

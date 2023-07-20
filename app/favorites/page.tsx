@@ -3,10 +3,12 @@ import ClientOnly from "../components/ClientOnly";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import getFavoriteListings from "../actions/getFavorite";
 import FavoritesClient from "./FavoritesClient";
+import getUserListings from "../actions/getListingByUser";
 
 const ListingPage = async() => {
     const listings = await getFavoriteListings();
     const currentUser = await getCurrentUser();
+ 
     if (listings.length === 0) {
         return (
             <ClientOnly>

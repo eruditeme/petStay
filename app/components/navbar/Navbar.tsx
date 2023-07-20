@@ -3,13 +3,17 @@ import Container from '../container/Container';
 import Logo from '../navbar/Logo'
 import UserMenu from '../navbar/UserMenu';
 import Categories from './Categories';
+import { SafeUser } from '@/app/types';
+import { Listing } from '@prisma/client';
 
 interface NavbarProps {
-    currentUser?: User | null;
+    currentUser?: SafeUser | null;
+    listing?: any | null;
 }
 
 const Navbar: React.FC<NavbarProps> = ({
-    currentUser
+    currentUser,
+    listing
 }) => {
     return (
         <div className="fixed w-full bg-white z-10 shadow-sm">
@@ -17,7 +21,7 @@ const Navbar: React.FC<NavbarProps> = ({
                 <Container>
                     <div className='flex flex-row items-center justify-between gap-3 md:gap-0'>
                         <Logo />
-                        <UserMenu currentUser={currentUser}/>
+                        <UserMenu currentUser={currentUser} listing={listing}/>
                     </div>
                 </Container>
             </div>
